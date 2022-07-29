@@ -7,20 +7,28 @@ class App extends React.Component {
     super(props);
 
     //Inicializar state object
-    this.state = { lat: null };
+    this.state = { lat: null, errorMessage: '' };
 
     window.navigator.geolocation.getCurrentPosition(
       position => { 
         // To update the state object we call the SET STATE
         this.setState ({ lat: position.coords.latitude});
        },
-      (err) => console.log(err)
+      err => {
+        this.setState ({ errorMessage: err.message })
+      }, 
     );
   }
   // React says we have to define a Render method.
   render() {
     // here I make reference of the state object
-    return <div>Latitud: {this.state.lat}</div>;
+    if (this.state.errorMessage && !this.state.lat) {
+        return <div>Error: {this.state.errorMessage}</div>;
+    }
+    if (this.state.lat && !this.state.errorMessage) {
+      return <div>Lat: {this.state.lat}</div>;
+    }
+    return <div>Loading!</div>;
   }
 }
 
