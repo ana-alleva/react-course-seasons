@@ -19,6 +19,7 @@ class App extends React.Component {
       }, 
     );
   }
+
   // React says we have to define a Render method.
   render() {
     // here I make reference of the state object
